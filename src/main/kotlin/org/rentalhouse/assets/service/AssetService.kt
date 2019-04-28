@@ -12,9 +12,9 @@ class AssetService(private val assetRepository: AssetRepository) {
         return assetRepository.save(any).id
     }
 
-    fun findById(assetId: String): Asset {
-        return assetRepository.findById(assetId).orElseThrow { AssetNotFoundException(assetId) }
+    fun findById(id: String): Asset {
+        return assetRepository.findById(id).orElseThrow { AssetNotFoundException(id) }
     }
 }
 
-class AssetNotFoundException(assetId: String) : RuntimeException("No asset found for $assetId")
+class AssetNotFoundException(id: String) : RuntimeException("No asset found for $id")

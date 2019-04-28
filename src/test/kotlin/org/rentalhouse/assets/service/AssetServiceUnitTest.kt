@@ -30,9 +30,9 @@ class AssetServiceUnitTest {
 
         every { assetRepository.save(any<Asset>()) } returns savedAsset(asset)
 
-        val assetId = assetService.add(asset)
+        val id = assetService.add(asset)
 
-        assertThat(assetId).isEqualTo("1000")
+        assertThat(id).isEqualTo("1000")
     }
 
     @Test

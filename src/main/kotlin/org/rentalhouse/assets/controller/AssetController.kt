@@ -15,13 +15,13 @@ class AssetController(private val assetService: AssetService) {
 
     @PostMapping(value = ["/v1/assets"])
     fun add(@RequestBody assetAdditionRequest: AssetAdditionRequest): ResponseEntity<String> {
-        val assetId = assetService.add(assetAdditionRequest.toAsset())
-        return ResponseEntity.created("/v1/assets/$assetId".toUri()).build()
+        val id = assetService.add(assetAdditionRequest.toAsset())
+        return ResponseEntity.created("/v1/assets/$id".toUri()).build()
     }
 
-    @GetMapping(value = ["/v1/assets/{assetId}"])
-    fun findById(@PathVariable assetId: String): AssetView {
-        val asset = assetService.findById(assetId)
+    @GetMapping(value = ["/v1/assets/{id}"])
+    fun findById(@PathVariable id: String): AssetView {
+        val asset = assetService.findById(id)
         return AssetView.fromAssert(asset)
     }
 
