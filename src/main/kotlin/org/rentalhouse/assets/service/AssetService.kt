@@ -1,8 +1,11 @@
 package org.rentalhouse.assets.service
 
-class AssetService {
+import org.rentalhouse.assets.entity.Asset
+import org.rentalhouse.assets.repository.AssertRepository
 
-    fun add(any: Any): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class AssetService(private val assetRepository: AssertRepository) {
+
+    fun add(any: Asset): String {
+        return assetRepository.save(any).id
     }
 }
