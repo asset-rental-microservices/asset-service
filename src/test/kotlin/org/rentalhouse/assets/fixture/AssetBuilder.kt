@@ -6,7 +6,7 @@ import org.rentalhouse.assets.entity.Asset
 class AssetBuilder {
 
     lateinit var identifier: String
-    private lateinit var address: Address
+    private  var address: Address = Address(state = "", street = "", city = "", pinCode = "")
 
     fun build(): Asset = Asset(identifier, address)
 
