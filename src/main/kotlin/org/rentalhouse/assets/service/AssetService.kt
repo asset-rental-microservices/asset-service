@@ -10,4 +10,8 @@ class AssetService(private val assetRepository: AssetRepository) {
     fun add(any: Asset): String {
         return assetRepository.save(any).id
     }
+
+    fun findById(assetId: String): Asset {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
