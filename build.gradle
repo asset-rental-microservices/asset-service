@@ -28,11 +28,18 @@ repositories {
     jcenter()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.SR2"
+    }
+}
+
 dependencies {
 
     compile             "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile             "org.springframework.boot:spring-boot-starter-data-mongodb"
     compile             "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
+    compile             "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
 
     implementation      "org.springframework.boot:spring-boot-starter-web"
 
