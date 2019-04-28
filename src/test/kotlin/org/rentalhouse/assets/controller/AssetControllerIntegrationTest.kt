@@ -1,9 +1,11 @@
 package org.rentalhouse.assets.controller
 
 import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.rentalhouse.assets.fixture.asset
 import org.rentalhouse.assets.repository.AssetRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -50,5 +52,29 @@ class AssetControllerIntegrationTest {
         assertThat(addedAsset.city()).isEqualTo("Pune")
         assertThat(addedAsset.state()).isEqualTo("MH")
         assertThat(addedAsset.pinCode()).isEqualTo("400918")
+    }
+
+    @Test
+    fun `should find an asset by id`() {
+
+        val asset = asset {
+            identifier = "B/401"
+            address {
+                street = "John's Street"
+                city = "Pune"
+                pinCode = "411098"
+                state = "MH"
+            }
+        }
+
+        val id = assetRepository.save(asset).id
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets/$id"))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.identifier", Matchers.`is`("B/401")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.address.street", Matchers.`is`("John's Street")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.address.city", Matchers.`is`("Pune")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.address.pinCode", Matchers.`is`("411098")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.address.state", Matchers.`is`("MH")))
     }
 }
