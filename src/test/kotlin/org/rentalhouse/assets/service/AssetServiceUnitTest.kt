@@ -28,7 +28,7 @@ class AssetServiceUnitTest {
             }
         }
 
-        every { assetRepository.save(any<Asset>()) } returns savedAsset(asset)
+        every { assetRepository.save(any<Asset>()) } returns savedAsset(asset, id = "1000")
 
         val id = assetService.add(asset)
 
@@ -117,9 +117,9 @@ class AssetServiceUnitTest {
         assertThrows<AssetNotFoundException> { assetService.findById("1000") }
     }
 
-    private fun savedAsset(asset: Asset): Asset {
+    private fun savedAsset(asset: Asset, id: String): Asset {
         return asset.apply {
-            ReflectionTestUtils.setField(this, "id", "1000")
+            ReflectionTestUtils.setField(this, "id", id)
         }
     }
 }
