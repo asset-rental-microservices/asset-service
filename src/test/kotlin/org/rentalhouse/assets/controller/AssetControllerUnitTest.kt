@@ -12,16 +12,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 class AssetControllerUnitTest {
 
-    private val assetService    = mockk<AssetService>()
+    private val assetService    = mockk<AssetService>(relaxed = true)
 
     private val assetController = AssetController(assetService)
 
     private val mockMvc = MockMvcBuilders.standaloneSetup(assetController).build()
 
+    val address = """{"street": "Magarpatta", "city": "Pune", "state": "MH", "pinCode" : "400918"}"""
+    val asset   = """{"identifier": "b/401", "address": $address}"""
+
     @Test
     fun `should add an asset with CREATED status`() {
-
-        val asset = """{"identifier": "n/401"}"""
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -33,8 +34,6 @@ class AssetControllerUnitTest {
 
     @Test
     fun `should add an asset with location uri referring to the newly created asset`() {
-
-        val asset = """{"identifier": "n/401"}"""
 
         every { assetService.add(any()) } returns "1000"
 

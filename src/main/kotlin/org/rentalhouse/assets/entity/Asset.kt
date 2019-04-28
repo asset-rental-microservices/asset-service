@@ -2,9 +2,16 @@ package org.rentalhouse.assets.entity
 
 import org.springframework.data.annotation.Id
 
-class Asset {
+class Asset(val identifier: String, private val address: Address) {
 
     @Id
     lateinit var id: String
-    private set
+        private set
+
+    fun street()    = address.street
+    fun city()      = address.city
+    fun state()     = address.state
+    fun pinCode()   = address.pinCode
 }
+
+class Address(val street: String, val city: String, val state: String, val pinCode: String)
