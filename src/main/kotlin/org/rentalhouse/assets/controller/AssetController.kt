@@ -4,7 +4,9 @@ import org.rentalhouse.assets.extension.toUri
 import org.rentalhouse.assets.model.AssetAdditionRequest
 import org.rentalhouse.assets.model.AssetView
 import org.rentalhouse.assets.model.toAsset
+import org.rentalhouse.assets.service.AssetNotFoundException
 import org.rentalhouse.assets.service.AssetService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -21,5 +23,10 @@ class AssetController(private val assetService: AssetService) {
     fun findById(@PathVariable assetId: String): AssetView {
         val asset = assetService.findById(assetId)
         return AssetView.fromAssert(asset)
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun assetNotFoundHandler(ex: AssetNotFoundException){
     }
 }
