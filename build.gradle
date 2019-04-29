@@ -51,6 +51,13 @@ dependencies {
     testImplementation  "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0"
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
+}
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions {
@@ -60,3 +67,5 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+build.dependsOn test
