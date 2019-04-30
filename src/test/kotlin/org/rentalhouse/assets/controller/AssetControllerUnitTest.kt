@@ -9,6 +9,7 @@ import org.rentalhouse.assets.service.AssetNotFoundException
 import org.rentalhouse.assets.service.AssetService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.test.util.ReflectionTestUtils
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -22,7 +23,7 @@ class AssetControllerUnitTest {
     private val mockMvc = MockMvcBuilders.standaloneSetup(assetController).build()
 
     private val address = """{"street": "Magarpatta", "city": "Pune", "state": "MH", "pinCode" : "400918"}"""
-    private val asset   = """{"identifier": "b/401", "address": $address}"""
+    private val asset   = """{"plotIdentifier": "b/401", "address": $address}"""
 
     @Test
     fun `should add an asset with CREATED status`() {
@@ -52,7 +53,7 @@ class AssetControllerUnitTest {
     fun `should find an asset with id`() {
 
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 street = "John's Street"
                 city = "Pune"
@@ -61,11 +62,13 @@ class AssetControllerUnitTest {
             }
         }
 
+        ReflectionTestUtils.setField(asset, "id", "1923233")
+
         every { assetService.findById("1000") } returns asset
 
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets/1000"))
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.identifier", Matchers.`is`("B/401")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.plotIdentifier", Matchers.`is`("B/401")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.street", Matchers.`is`("John's Street")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.city", Matchers.`is`("Pune")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.pinCode", Matchers.`is`("411098")))

@@ -2,7 +2,7 @@ package org.rentalhouse.assets.entity
 
 import org.springframework.data.annotation.Id
 
-class Asset(val identifier: String, val address: Address) {
+class Asset(val plotIdentifier: String, val address: Address) {
 
     @Id
     lateinit var id: String

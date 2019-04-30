@@ -35,7 +35,7 @@ class AssetControllerIntegrationTest {
     @Test
     fun `should add an asset`() {
         val address = """{"street": "Magarpatta", "city": "Pune", "state": "MH", "pinCode" : "400918"}"""
-        val asset   = """{"identifier": "b/401", "address": $address}"""
+        val asset   = """{"plotIdentifier": "b/401", "address": $address}"""
 
         mockMvc.perform(
             MockMvcRequestBuilders
@@ -47,7 +47,7 @@ class AssetControllerIntegrationTest {
         val addedAsset = assetRepository.findAll().first()
 
         assertThat(addedAsset.id).isNotNull()
-        assertThat(addedAsset.identifier).isEqualTo("b/401")
+        assertThat(addedAsset.plotIdentifier).isEqualTo("b/401")
         assertThat(addedAsset.street()).isEqualTo("Magarpatta")
         assertThat(addedAsset.city()).isEqualTo("Pune")
         assertThat(addedAsset.state()).isEqualTo("MH")
@@ -58,7 +58,7 @@ class AssetControllerIntegrationTest {
     fun `should find an asset by id`() {
 
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 street = "John's Street"
                 city = "Pune"
@@ -71,7 +71,7 @@ class AssetControllerIntegrationTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets/$id"))
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.identifier", Matchers.`is`("B/401")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.plotIdentifier", Matchers.`is`("B/401")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.street", Matchers.`is`("John's Street")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.city", Matchers.`is`("Pune")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.pinCode", Matchers.`is`("411098")))

@@ -20,7 +20,7 @@ class AssetServiceUnitTest {
     @Test
     fun `should return the asset id of a newly added asset`() {
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 street = "John's Street"
                 city = "Pune"
@@ -37,19 +37,19 @@ class AssetServiceUnitTest {
 
     @Test
     fun `should find an asset with identifier`() {
-        val asset = asset { identifier = "B/401" }
+        val asset = asset { plotIdentifier = "B/401" }
 
         every { assetRepository.findById("1000") } returns Optional.of(asset)
 
         val foundAsset = assetService.findById("1000")
 
-        assertThat(foundAsset.identifier).isEqualTo("B/401")
+        assertThat(foundAsset.plotIdentifier).isEqualTo("B/401")
     }
 
     @Test
     fun `should find an asset with city`() {
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 city = "Pune"
             }
@@ -65,7 +65,7 @@ class AssetServiceUnitTest {
     @Test
     fun `should find an asset with street`() {
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 street = "Magarpatta"
             }
@@ -81,7 +81,7 @@ class AssetServiceUnitTest {
     @Test
     fun `should find an asset with state`() {
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 state = "MH"
             }
@@ -97,7 +97,7 @@ class AssetServiceUnitTest {
     @Test
     fun `should find an asset with pincode`() {
         val asset = asset {
-            identifier = "B/401"
+            plotIdentifier = "B/401"
             address {
                 pinCode = "400910"
             }

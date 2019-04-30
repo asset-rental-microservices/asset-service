@@ -2,13 +2,14 @@ package org.rentalhouse.assets.fixture
 
 import org.rentalhouse.assets.entity.Address
 import org.rentalhouse.assets.entity.Asset
+import java.util.*
 
 class AssetBuilder {
 
-    lateinit var identifier: String
+    lateinit var plotIdentifier: String
     private  var address: Address = Address(state = "", street = "", city = "", pinCode = "")
 
-    fun build(): Asset = Asset(identifier, address)
+    fun build(): Asset = Asset(plotIdentifier, address)
 
     fun address(block: AddressBuilder.() -> Unit): Address =
         AddressBuilder()

@@ -1,0 +1,6 @@
+rental:
+  house:
+    asset:
+      service:
+        base:
+          uri: http://localhost:8080

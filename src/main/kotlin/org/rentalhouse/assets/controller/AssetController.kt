@@ -7,6 +7,7 @@ import org.rentalhouse.assets.model.toAsset
 import org.rentalhouse.assets.service.AssetNotFoundException
 import org.rentalhouse.assets.service.AssetService
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -19,7 +20,7 @@ class AssetController(private val assetService: AssetService) {
         return ResponseEntity.created("/v1/assets/$id".toUri()).build()
     }
 
-    @GetMapping(value = ["/v1/assets/{id}"])
+    @GetMapping(value = ["/v1/assets/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findById(@PathVariable id: String): AssetView {
         val asset = assetService.findById(id)
         return AssetView.fromAssert(asset)

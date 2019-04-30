@@ -2,11 +2,11 @@ package org.rentalhouse.assets.model
 
 import org.rentalhouse.assets.entity.Asset
 
-class AssetView private constructor(val identifier: String, val address: Address) {
+class AssetView private constructor(val id: String, val plotIdentifier: String, val address: Address) {
 
     companion object {
         fun fromAssert(asset: Asset): AssetView {
-            return AssetView(asset.identifier, Address.fromAddress(asset.address))
+            return AssetView(asset.id, asset.plotIdentifier, Address.fromAddress(asset.address))
         }
     }
 }
