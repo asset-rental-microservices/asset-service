@@ -18,7 +18,7 @@
           "Content-Type": "application/json"
         },
         "body": {
-          "assetId": "1000"
+          "id": "1000"
         }
       },
       "providerStates": [
