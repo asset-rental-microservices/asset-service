@@ -35,6 +35,6 @@ class AssetController(private val assetService: AssetService) {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun assetNotFoundHandler(ex: AssetNotFoundException) {
-        logger.error("Asset with id ${ex.id} not found")
+        logger.error("Asset with id ${ex.id} not found", ex)
     }
 }
