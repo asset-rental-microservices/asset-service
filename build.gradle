@@ -17,6 +17,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlin_version}"
 
         classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC14"
     }
 }
 
@@ -25,6 +26,7 @@ apply plugin: "kotlin-spring"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 apply plugin: "com.palantir.docker"
+apply plugin: "io.gitlab.arturbosch.detekt"
 
 group   "org.rentalhouse"
 version "1.0-SNAPSHOT"
@@ -75,6 +77,16 @@ docker {
     name "${project.group}/${bootJar.baseName}"
     copySpec.from(tasks.unpack.outputs).into("dependency")
     buildArgs(['DEPENDENCY': "dependency"])
+}
+
+detekt {
+    config = files("src/main/resources/default-detekt-config.yml")
+    reports {
+        html {
+            enabled = true
+            destination = file("build/deteKt.html")
+        }
+    }
 }
 
 compileKotlin {
