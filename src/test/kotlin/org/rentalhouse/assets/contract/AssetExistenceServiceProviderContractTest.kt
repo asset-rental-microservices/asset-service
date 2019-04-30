@@ -3,10 +3,8 @@ package org.rentalhouse.assets.contract
 import au.com.dius.pact.provider.junit.Provider
 import au.com.dius.pact.provider.junit.State
 import au.com.dius.pact.provider.junit.loader.PactFolder
-import au.com.dius.pact.provider.junit5.HttpTestTarget
 import au.com.dius.pact.provider.junit5.PactVerificationContext
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
 import org.rentalhouse.assets.fixture.asset
@@ -27,11 +25,6 @@ class AssetExistenceServiceProviderContractTest {
 
     @Autowired
     private lateinit var assetRepository: AssetRepository
-
-    @BeforeEach
-    fun setupTestTarget(context: PactVerificationContext) {
-        context.target = HttpTestTarget("localhost", 8080, "/")
-    }
 
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider::class)
