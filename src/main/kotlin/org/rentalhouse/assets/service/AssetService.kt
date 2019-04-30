@@ -3,13 +3,12 @@ package org.rentalhouse.assets.service
 import org.rentalhouse.assets.entity.Asset
 import org.rentalhouse.assets.repository.AssetRepository
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
 class AssetService(private val assetRepository: AssetRepository) {
 
-    fun add(any: Asset): String {
-        return assetRepository.save(any).id
+    fun add(asset: Asset): String {
+        return assetRepository.save(asset).id
     }
 
     fun findById(id: String): Asset {
@@ -17,4 +16,4 @@ class AssetService(private val assetRepository: AssetRepository) {
     }
 }
 
-class AssetNotFoundException(id: String) : RuntimeException("No asset found for $id")
+class AssetNotFoundException(val id: String) : RuntimeException("No asset found for $id")
