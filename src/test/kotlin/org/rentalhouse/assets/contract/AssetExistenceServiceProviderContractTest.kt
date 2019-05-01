@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.util.ReflectionTestUtils
 
 
 @ExtendWith(SpringExtension::class)
@@ -40,7 +39,7 @@ class AssetExistenceServiceProviderContractTest {
 
     @State("asset with id 1000 exists")
     fun returnsAsset() {
-        val asset = asset {
+        val asset = asset(id = "1000") {
             plotIdentifier = "b/401"
             address {
                 street = "John's Street"
@@ -50,7 +49,6 @@ class AssetExistenceServiceProviderContractTest {
             }
         }
 
-        ReflectionTestUtils.setField(asset, "id", "1000")
         assetRepository.save(asset)
     }
 
