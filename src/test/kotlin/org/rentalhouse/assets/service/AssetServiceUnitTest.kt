@@ -1,12 +1,12 @@
 package org.rentalhouse.assets.service
 
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.rentalhouse.assets.entity.Asset
 import org.rentalhouse.assets.fixture.asset
+import org.rentalhouse.assets.model.Status
 import org.rentalhouse.assets.repository.AssetRepository
 import org.springframework.test.util.ReflectionTestUtils
 import java.util.*
@@ -115,6 +115,29 @@ class AssetServiceUnitTest {
         every { assetRepository.findById("1000") } returns Optional.empty()
 
         assertThrows<AssetNotFoundException> { assetService.findById("1000") }
+    }
+
+    @Test
+    fun `should update the status of an asset to RENTAL_DEAL_INITIALIZED`() {
+        val asset = asset {
+            plotIdentifier = "B/401"
+        }
+
+        val slot = slot<Asset>()
+
+        every { assetRepository.findById("1000") }    returns Optional.of(asset)
+        every { assetRepository.save(capture(slot)) } returns savedAsset(asset, "90909")
+
+        assetService.updateStatus("1000", Status.RENTAL_DEAL_INITIALIZED)
+
+        assertThat(slot.captured.status).isEqualTo(Status.RENTAL_DEAL_INITIALIZED)
+    }
+
+    @Test
+    fun `should throw AssetNotFoundException given no asset exists for an id while updating the status`() {
+        every { assetRepository.findById("1000") } returns Optional.empty()
+
+        assertThrows<AssetNotFoundException> { assetService.updateStatus("1000", Status.RENTAL_DEAL_INITIALIZED) }
     }
 
     private fun savedAsset(asset: Asset, id: String): Asset {
