@@ -1,6 +1,5 @@
 package org.rentalhouse.assets.event
 
-import org.rentalhouse.assets.model.AssetStatusUpdationRequest
 import org.rentalhouse.assets.model.Status
 import org.rentalhouse.assets.service.AssetService
 import org.springframework.stereotype.Component
@@ -9,11 +8,8 @@ import org.springframework.stereotype.Component
 class RentalDealEventsListener(private val assetService: AssetService) {
 
     fun dealInitialized(rentalDealInitialized: RentalDealInitialized) {
-        assetService.updateStatus(rentalDealInitialized.toAssetUpdationRequest())
+        assetService.updateStatus(rentalDealInitialized.assetId, Status.RENTAL_DEAL_INITIALIZED)
     }
 }
 
-class RentalDealInitialized(val assetId: String) {
-    fun toAssetUpdationRequest(): AssetStatusUpdationRequest =
-        AssetStatusUpdationRequest(assetId, Status.RENTAL_DEAL_INITIALIZED)
-}
+class RentalDealInitialized(val assetId: String)
