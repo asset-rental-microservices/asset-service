@@ -9,9 +9,11 @@
     {
       "description": "a rental deal initialized event",
       "metaData": {
-        "Content-Type": "application/json; charset\u003dUTF-8"
+        "Content-Type": "application/json"
       },
-      "contents": "{\"assetId\":\"1001\"}",
+      "contents": {
+        "assetId": "1001"
+      },
       "providerStates": [
         {
           "name": "rental deal for asset with id 1001 is INITIALIZED"

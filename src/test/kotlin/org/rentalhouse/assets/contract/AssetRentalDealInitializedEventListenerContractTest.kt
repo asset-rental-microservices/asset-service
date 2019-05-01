@@ -42,10 +42,12 @@ class AssetRentalDealInitializedEventListenerContractTest {
 
     @Pact(consumer = "assetService", provider = "assetRentalService")
     fun pactAssetDealInitialized(builder: MessagePactBuilder): MessagePact {
+        val metadata = mapOf("Content-Type" to "application/json")
         return builder
                 .given("rental deal for asset with id 1001 is INITIALIZED")
                 .expectsToReceive("a rental deal initialized event")
                 .withContent(PactDslJsonBody().stringValue("assetId", "1001"))
+                .withMetadata(metadata)
                 .toPact()
     }
 
