@@ -5,6 +5,7 @@ import au.com.dius.pact.provider.junit.State
 import au.com.dius.pact.provider.junit.loader.PactFolder
 import au.com.dius.pact.provider.junit5.PactVerificationContext
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
 import org.rentalhouse.assets.fixture.asset
@@ -25,6 +26,11 @@ class AssetExistenceServiceProviderContractTest {
 
     @Autowired
     private lateinit var assetRepository: AssetRepository
+
+    @BeforeEach
+    fun setUp() {
+        assetRepository.deleteAll()
+    }
 
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider::class)

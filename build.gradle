@@ -56,6 +56,9 @@ dependencies {
     testCompile         "org.assertj:assertj-core:3.12.2"
     testCompile         "org.springframework.boot:spring-boot-starter-test"
     testCompile         "au.com.dius:pact-jvm-provider-junit5_2.12:3.6.5"
+    testCompile         ("au.com.dius:pact-jvm-consumer-junit5_2.12:3.6.5") {
+        exclude group: "org.json"
+    }
     testCompile         "org.springframework.cloud:spring-cloud-stream-test-support"
 
     testImplementation  "io.mockk:mockk:1.9"

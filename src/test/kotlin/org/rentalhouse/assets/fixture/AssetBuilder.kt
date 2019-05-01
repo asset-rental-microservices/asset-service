@@ -2,7 +2,7 @@ package org.rentalhouse.assets.fixture
 
 import org.rentalhouse.assets.entity.Address
 import org.rentalhouse.assets.entity.Asset
-import java.util.*
+import org.springframework.test.util.ReflectionTestUtils
 
 class AssetBuilder {
 
@@ -28,3 +28,11 @@ class AddressBuilder {
 }
 
 fun asset(block: AssetBuilder.() -> Unit): Asset = AssetBuilder().apply(block).build()
+
+fun asset(id: String, block: AssetBuilder.() -> Unit): Asset = AssetBuilder()
+    .apply(block)
+    .build()
+    .run {
+        ReflectionTestUtils.setField(this, "id", id)
+        this
+    }
