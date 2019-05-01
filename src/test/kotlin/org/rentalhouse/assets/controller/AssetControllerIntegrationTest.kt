@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.rentalhouse.assets.fixture.asset
-import org.rentalhouse.assets.model.Status
+import org.rentalhouse.assets.model.AssetStatus
 import org.rentalhouse.assets.repository.AssetRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -50,7 +50,7 @@ class AssetControllerIntegrationTest {
         val addedAsset = assetRepository.findAll().first()
 
         assertThat(addedAsset.id).isNotNull()
-        assertThat(addedAsset.status).isEqualTo(Status.AVAILABLE)
+        assertThat(addedAsset.status).isEqualTo(AssetStatus.AVAILABLE)
         assertThat(addedAsset.plotIdentifier).isEqualTo("b/401")
         assertThat(addedAsset.street()).isEqualTo("Magarpatta")
         assertThat(addedAsset.city()).isEqualTo("Pune")
@@ -76,7 +76,7 @@ class AssetControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets/$id"))
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.jsonPath("$.plotIdentifier",  Matchers.`is`("B/401")))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.status",          Matchers.`is`(Status.AVAILABLE.name)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.status",          Matchers.`is`(AssetStatus.AVAILABLE.name)))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.street",  Matchers.`is`("John's Street")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.city",    Matchers.`is`("Pune")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.pinCode", Matchers.`is`("411098")))

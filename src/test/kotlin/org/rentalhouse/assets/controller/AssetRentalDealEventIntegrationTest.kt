@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.rentalhouse.assets.event.channel.RentalDealChannels
 import org.rentalhouse.assets.fixture.asset
-import org.rentalhouse.assets.model.Status
+import org.rentalhouse.assets.model.AssetStatus
 import org.rentalhouse.assets.repository.AssetRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -50,7 +50,7 @@ class AssetRentalDealEventIntegrationTest {
 
         val updatedAsset = assetRepository.findById(id).get()
 
-        assertThat(updatedAsset.status).isEqualTo(Status.RENTAL_DEAL_INITIALIZED)
+        assertThat(updatedAsset.status).isEqualTo(AssetStatus.RENTAL_DEAL_INITIALIZED)
         assertThat(updatedAsset.id).isEqualTo(id)
     }
 }

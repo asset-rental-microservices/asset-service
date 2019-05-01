@@ -1,6 +1,6 @@
 package org.rentalhouse.assets.entity
 
-import org.rentalhouse.assets.model.Status
+import org.rentalhouse.assets.model.AssetStatus
 import org.springframework.data.annotation.Id
 
 class Asset(val plotIdentifier: String, val address: Address) {
@@ -9,7 +9,7 @@ class Asset(val plotIdentifier: String, val address: Address) {
     lateinit var id: String
         private set
 
-    var status: Status = Status.AVAILABLE
+    var status: AssetStatus = AssetStatus.AVAILABLE
         private set
 
     fun street()    = address.street
@@ -17,7 +17,7 @@ class Asset(val plotIdentifier: String, val address: Address) {
     fun state()     = address.state
     fun pinCode()   = address.pinCode
 
-    fun updateStatus(status: Status): Asset {
+    fun updateStatus(status: AssetStatus): Asset {
         this.status = status
         return this
     }

@@ -1,7 +1,7 @@
 package org.rentalhouse.assets.event.listener
 
 import org.rentalhouse.assets.event.channel.RentalDealChannels
-import org.rentalhouse.assets.model.Status
+import org.rentalhouse.assets.model.AssetStatus
 import org.rentalhouse.assets.service.AssetService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -18,7 +18,7 @@ class RentalDealEventsListener(private val assetService: AssetService) {
     @StreamListener("rentalDeals")
     fun dealInitialized(rentalDealInitialized: RentalDealInitialized) {
         logger.info("Received rentalDealInitialized for ${rentalDealInitialized.assetId}")
-        assetService.updateStatus(rentalDealInitialized.assetId, Status.RENTAL_DEAL_INITIALIZED)
+        assetService.updateStatus(rentalDealInitialized.assetId, AssetStatus.RENTAL_DEAL_INITIALIZED)
     }
 }
 

@@ -3,7 +3,7 @@ package org.rentalhouse.assets.model
 import org.rentalhouse.assets.entity.Asset
 
 class AssetView private constructor(val id: String,
-                                    val status: Status,
+                                    val status: AssetStatus,
                                     val plotIdentifier: String,
                                     val address: Address) {
 

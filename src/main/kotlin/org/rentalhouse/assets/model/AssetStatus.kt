@@ -1,6 +1,6 @@
 package org.rentalhouse.assets.model
 
-enum class Status {
+enum class AssetStatus {
     RENTAL_DEAL_INITIALIZED,
     AVAILABLE
 }

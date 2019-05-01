@@ -1,7 +1,7 @@
 package org.rentalhouse.assets.service
 
 import org.rentalhouse.assets.entity.Asset
-import org.rentalhouse.assets.model.Status
+import org.rentalhouse.assets.model.AssetStatus
 import org.rentalhouse.assets.repository.AssetRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -20,7 +20,7 @@ class AssetService(private val assetRepository: AssetRepository) {
         return assetRepository.findById(id).orElseThrow { AssetNotFoundException(id) }
     }
 
-    fun updateStatus(id: String, status: Status) {
+    fun updateStatus(id: String, status: AssetStatus) {
         logger.info("Updating status of id $id to $status")
         findById(id).updateStatus(status).also { assetRepository.save(it) }
     }
