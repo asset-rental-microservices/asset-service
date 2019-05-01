@@ -3,10 +3,14 @@ package org.rentalhouse.assets.service
 import org.rentalhouse.assets.entity.Asset
 import org.rentalhouse.assets.model.Status
 import org.rentalhouse.assets.repository.AssetRepository
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class AssetService(private val assetRepository: AssetRepository) {
+
+    private val logger: Logger = LoggerFactory.getLogger(AssetService::class.java)
 
     fun add(asset: Asset): String {
         return assetRepository.save(asset).id
@@ -17,6 +21,7 @@ class AssetService(private val assetRepository: AssetRepository) {
     }
 
     fun updateStatus(id: String, status: Status) {
+        logger.info("Updating status of id $id to $status")
         findById(id).updateStatus(status).also { assetRepository.save(it) }
     }
 }

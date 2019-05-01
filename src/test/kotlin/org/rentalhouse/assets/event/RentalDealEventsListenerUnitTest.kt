@@ -3,6 +3,8 @@ package org.rentalhouse.assets.event
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import org.rentalhouse.assets.event.listener.RentalDealEventsListener
+import org.rentalhouse.assets.event.listener.RentalDealInitialized
 import org.rentalhouse.assets.model.Status
 import org.rentalhouse.assets.service.AssetService
 
