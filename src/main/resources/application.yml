@@ -4,6 +4,15 @@ spring:
       uri: ${MONGODB_URI:mongodb://localhost}/asset-service
   application:
     name: asset-service
+  cloud:
+    stream:
+      bindings:
+        rentalDeals:
+          destination: rentalDeals
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: localhost:9092
 
 server:
   port: 8081
