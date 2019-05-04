@@ -38,6 +38,13 @@ class AssetController(private val assetService: AssetService) {
         return AssetView.fromAssert(asset)
     }
 
+    @GetMapping(value = ["/v1/assets"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun findAll(): List<AssetView> {
+        logger.info("Finding all assets")
+        val assets = assetService.findAll()
+        return assets.map { AssetView.fromAssert(it) }
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun assetNotFoundHandler(ex: AssetNotFoundException) {

@@ -10,6 +10,7 @@ import org.rentalhouse.assets.entity.Asset
 import org.rentalhouse.assets.fixture.asset
 import org.rentalhouse.assets.model.AssetStatus
 import org.rentalhouse.assets.repository.AssetRepository
+import org.springframework.data.domain.Sort
 import org.springframework.test.util.ReflectionTestUtils
 import java.util.*
 
@@ -141,6 +142,23 @@ class AssetServiceUnitTest {
 
         assertThrows<AssetNotFoundException> { assetService.updateStatus("1000", AssetStatus.RENTAL_DEAL_INITIALIZED) }
     }
+
+    @Test
+    fun `should find all assets with size 2`() {
+        val asset1 = asset {
+            plotIdentifier = "B/401"
+        }
+        val asset2 = asset {
+            plotIdentifier = "C/401"
+        }
+
+        every { assetRepository.findAll(any<Sort>()) } returns listOf(asset1, asset2)
+
+        val assets = assetService.findAll()
+
+        assertThat(assets.size).isEqualTo(2)
+    }
+
 
     private fun savedAsset(asset: Asset, id: String): Asset {
         return asset.apply {

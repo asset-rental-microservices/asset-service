@@ -82,4 +82,46 @@ class AssetControllerIntegrationTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.pinCode", Matchers.`is`("411098")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.address.state",   Matchers.`is`("MH")))
     }
+
+    @Test
+    fun `should find all assets`() {
+
+        val asset1 = asset {
+            plotIdentifier = "B/401"
+            address {
+                street = "John's Street"
+                city = "Pune"
+                pinCode = "411098"
+                state = "MH"
+            }
+        }
+        val asset2 = asset {
+            plotIdentifier = "C/401"
+            address {
+                street = "Mathew's Street"
+                city = "Pune"
+                pinCode = "411048"
+                state = "MH"
+            }
+        }
+
+        assetRepository.save(asset1)
+        assetRepository.save(asset2)
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets"))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$",                 Matchers.hasSize<Int>(2)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].plotIdentifier",  Matchers.`is`("B/401")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].status",          Matchers.`is`(AssetStatus.AVAILABLE.name)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.street",  Matchers.`is`("John's Street")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.city",    Matchers.`is`("Pune")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.pinCode", Matchers.`is`("411098")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.state",   Matchers.`is`("MH")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].plotIdentifier",  Matchers.`is`("C/401")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].status",          Matchers.`is`(AssetStatus.AVAILABLE.name)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].address.street",  Matchers.`is`("Mathew's Street")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].address.city",    Matchers.`is`("Pune")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].address.pinCode", Matchers.`is`("411048")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].address.state",   Matchers.`is`("MH")))
+    }
 }

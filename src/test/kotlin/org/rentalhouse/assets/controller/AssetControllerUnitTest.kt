@@ -76,6 +76,43 @@ class AssetControllerUnitTest {
     }
 
     @Test
+    fun `should find all assets`() {
+
+        val asset = asset {
+            plotIdentifier = "B/401"
+            address {
+                street = "John's Street"
+                city = "Pune"
+                pinCode = "411098"
+                state = "MH"
+            }
+        }
+
+        ReflectionTestUtils.setField(asset, "id", "1923233")
+
+        every { assetService.findAll() } returns listOf(asset)
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets"))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize<Int>(1)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].plotIdentifier", Matchers.`is`("B/401")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.street", Matchers.`is`("John's Street")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.city", Matchers.`is`("Pune")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.pinCode", Matchers.`is`("411098")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].address.state", Matchers.`is`("MH")))
+    }
+
+    @Test
+    fun `should return Ok given No assets are found in finding all assets`() {
+
+        every { assetService.findAll() } returns listOf()
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/assets"))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize<Int>(0)))
+    }
+
+    @Test
     fun `should return NOT_FOUND given an asset is not found for id`() {
 
         every { assetService.findById("1000") } throws AssetNotFoundException("1000")
